@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { canManageSystem } from "@/lib/permissions";
 import { BranchesManager } from "@/components/admin/BranchesManager";
 
 export default async function AdminBranchesPage() {
