@@ -29,12 +29,12 @@ async function validateFather(fatherId: string | null | undefined, personId?: st
     }
     visited.add(currentId);
 
-    const fatherRecord = await db.person.findUnique({
+    const dbRecord = await db.person.findUnique({
       where: { id: currentId },
       select: { fatherId: true },
     });
 
-    currentId = fatherRecord?.fatherId || null;
+    currentId = dbRecord?.fatherId || null;
   }
 
   return fatherId;
