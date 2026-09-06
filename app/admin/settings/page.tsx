@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ImportExportPanel } from "@/components/admin/ImportExportPanel";
+import { FileSpreadsheet } from "lucide-react";
 
 export default function SettingsPage() {
   return (
