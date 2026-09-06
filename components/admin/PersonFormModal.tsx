@@ -132,7 +132,7 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">الجنس</label>
-              <Select onValueChange={form.setValue} defaultValue={form.getValues("gender")}>
+              <Select onValueChange={(value) => form.setValue("gender", value as Gender)} defaultValue={form.getValues("gender")}>
                 <SelectTrigger>
                   <SelectValue placeholder="اختر الجنس" />
                 </SelectTrigger>
@@ -147,7 +147,7 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">الحالة</label>
-              <Select onValueChange={form.setValue} defaultValue={form.getValues("status")}>
+              <Select onValueChange={(value) => form.setValue("status", value as PersonStatus)} defaultValue={form.getValues("status")}>
                 <SelectTrigger>
                   <SelectValue placeholder="اختر الحالة" />
                 </SelectTrigger>
@@ -180,7 +180,7 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium">الفرع</label>
-              <Select onValueChange={form.setValue} defaultValue={form.getValues("branchId") || undefined}>
+              <Select onValueChange={(value) => form.setValue("branchId", value)} defaultValue={form.getValues("branchId") || undefined}>
                 <SelectTrigger>
                   <SelectValue placeholder="اختر الفرع" />
                 </SelectTrigger>
