@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { canManagePeople } from "@/lib/permissions";
 import { importPersonSchema, ImportPerson } from "@/lib/validations/import";
 import { z } from "zod";
+import { AuditLogService } from "@/server/services/audit.service";
 
 export async function importPeople(data: ImportPerson[]) {
   const session = await auth();
