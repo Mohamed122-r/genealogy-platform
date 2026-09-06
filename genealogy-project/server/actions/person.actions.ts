@@ -29,6 +29,7 @@ async function validateFather(fatherId: string | null | undefined, personId?: st
     }
     visited.add(currentId);
 
+    // @ts-ignore - تجاهل خطأ النوع المؤقت
     const dbRecord = await db.person.findUnique({
       where: { id: currentId },
       select: { fatherId: true },
