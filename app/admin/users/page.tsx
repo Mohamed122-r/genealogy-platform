@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { canManageSystem } from "@/lib/permissions";
 import { UsersManager } from "@/components/admin/UsersManager";
 
 export default async function AdminUsersPage() {
