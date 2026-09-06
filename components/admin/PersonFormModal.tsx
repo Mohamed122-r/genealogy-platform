@@ -170,7 +170,7 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
               <Combobox 
                 options={fatherOptions}
                 value={form.getValues("fatherId")}
-                onChange={form.setValue}
+                onChange={(value) => form.setValue("fatherId", value)}
                 placeholder="ابحث عن الأب..."
                 emptyMessage="لا يوجد آباء مطابقين"
               />
