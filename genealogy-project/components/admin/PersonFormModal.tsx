@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -29,7 +28,6 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // تجهيز خيارات الأب (الاستبعاد الذاتي)
   const fatherOptions = people
     .filter(p => p.id !== person?.id && p.gender === "MALE")
     .map(p => ({
@@ -53,7 +51,6 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
     },
   });
 
-  // تعبئة البيانات عند التعديل
   useEffect(() => {
     if (person) {
       form.reset({
@@ -114,179 +111,119 @@ export function PersonFormModal({ isOpen, onClose, person, branches, people }: P
           </DialogTitle>
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>الاسم الأول</FormLabel>
-                    <FormControl>
-                      <Input placeholder="مثال: محمد" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>اسم العائلة</FormLabel>
-                    <FormControl>
-                      <Input placeholder="مثال: القحطاني" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="gender"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>الجنس</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="اختر الجنس" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="MALE">ذكر</SelectItem>
-                        <SelectItem value="FEMALE">أنثى</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>الحالة</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="اختر الحالة" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="ALIVE">حي</SelectItem>
-                        <SelectItem value="DECEASED">متوفى</SelectItem>
-                        <SelectItem value="DISCONNECTED">منقطع</SelectItem>
-                        <SelectItem value="UNKNOWN">غير معروف</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="fatherId"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>الأب</FormLabel>
-                    <FormControl>
-                      <Combobox 
-                        options={fatherOptions}
-                        value={field.value}
-                        onChange={field.onChange}
-                        placeholder="ابحث عن الأب..."
-                        emptyMessage="لا يوجد آباء مطابقين"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="branchId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>الفرع</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value || undefined}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="اختر الفرع" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {branches.map((branch) => (
-                          <SelectItem key={branch.id} value={branch.id}>{branch.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="birthDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>تاريخ الميلاد</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="deathDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>تاريخ الوفاة</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ملاحظات</FormLabel>
-                  <FormControl>
-                    <Input placeholder="ملاحظات إضافية..." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">الاسم الأول</label>
+              <Input placeholder="مثال: محمد" {...form.register("firstName")} />
+              {form.formState.errors.firstName && (
+                <p className="text-sm text-red-500">{form.formState.errors.firstName.message}</p>
               )}
-            />
-
-            <div className="flex justify-end gap-2 pt-4">
-              <Button type="button" variant="outline" onClick={onClose}>إلغاء</Button>
-              <Button type="submit" disabled={isSubmitting} className="bg-gold-500 hover:bg-gold-600 text-deep-green">
-                {isSubmitting ? <Loader2 className="animate-spin" /> : "حفظ"}
-              </Button>
             </div>
-          </form>
-        </Form>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">اسم العائلة</label>
+              <Input placeholder="مثال: القحطاني" {...form.register("lastName")} />
+              {form.formState.errors.lastName && (
+                <p className="text-sm text-red-500">{form.formState.errors.lastName.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">الجنس</label>
+              <Select onValueChange={(value) => form.setValue("gender", value as Gender)} defaultValue={form.getValues("gender")}>
+                <SelectTrigger>
+                  <SelectValue placeholder="اختر الجنس" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="MALE">ذكر</SelectItem>
+                  <SelectItem value="FEMALE">أنثى</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.formState.errors.gender && (
+                <p className="text-sm text-red-500">{form.formState.errors.gender.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">الحالة</label>
+              <Select onValueChange={(value) => form.setValue("status", value as PersonStatus)} defaultValue={form.getValues("status")}>
+                <SelectTrigger>
+                  <SelectValue placeholder="اختر الحالة" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALIVE">حي</SelectItem>
+                  <SelectItem value="DECEASED">متوفى</SelectItem>
+                  <SelectItem value="DISCONNECTED">منقطع</SelectItem>
+                  <SelectItem value="UNKNOWN">غير معروف</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.formState.errors.status && (
+                <p className="text-sm text-red-500">{form.formState.errors.status.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">الأب</label>
+              <Combobox 
+                options={fatherOptions}
+                value={form.getValues("fatherId")}
+                onChange={(value) => form.setValue("fatherId", value)}
+                placeholder="ابحث عن الأب..."
+                emptyMessage="لا يوجد آباء مطابقين"
+              />
+              {form.formState.errors.fatherId && (
+                <p className="text-sm text-red-500">{form.formState.errors.fatherId.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">الفرع</label>
+              <Select onValueChange={(value) => form.setValue("branchId", value)} defaultValue={form.getValues("branchId") || undefined}>
+                <SelectTrigger>
+                  <SelectValue placeholder="اختر الفرع" />
+                </SelectTrigger>
+                <SelectContent>
+                  {branches.map((branch) => (
+                    <SelectItem key={branch.id} value={branch.id}>{branch.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">تاريخ الميلاد</label>
+              <Input 
+                type="date" 
+                value={form.watch("birthDate") || ""} 
+                onChange={(e) => form.setValue("birthDate", e.target.value)} 
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">تاريخ الوفاة</label>
+              <Input 
+                type="date" 
+                value={form.watch("deathDate") || ""} 
+                onChange={(e) => form.setValue("deathDate", e.target.value)} 
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm font-medium">ملاحظات</label>
+            <Input placeholder="ملاحظات إضافية..." {...form.register("notes")} />
+          </div>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={onClose}>إلغاء</Button>
+            <Button type="submit" disabled={isSubmitting} className="bg-gold-500 hover:bg-gold-600 text-deep-green">
+              {isSubmitting ? <Loader2 className="animate-spin" /> : "حفظ"}
+            </Button>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
