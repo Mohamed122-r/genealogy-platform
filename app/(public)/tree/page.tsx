@@ -5,9 +5,11 @@ import { db } from "@/lib/db";
 import { TreeCanvas } from "@/components/tree/TreeCanvas";
 import { TreeExporter } from "@/components/tree/TreeExporter";
 import { PersonNode } from "@/types/tree";
-import { useQuery } from "@tanstack/react-query";
 
-// تجهيز البيانات من قاعدة البيانات في Server Component
+// منع التوليد الثابت لهذه الصفحة
+export const dynamic = "force-dynamic";
+
+// تجهيز البيانات من قاعدة البيانات
 async function getTreeData() {
   const people = await db.person.findMany({
     where: { deletedAt: null },
@@ -51,33 +53,11 @@ export default async function TreePage() {
         <TreeExporter svgRef={svgRef} treeTitle="الشجرة-الكريمة" />
       </header>
       
-      {/* تنسيق الطباعة المخصص */}
-      <style jsx global>{`
-        @media print {
-          @page {
-            size: landscape;
-            margin: 0;
-          }
-          body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-          .print-header {
-            display: none !important;
-          }
-          svg {
-            width: 100% !important;
-            height: 100% !important;
-          }
-        }
-      `}</style>
-
       <main className="flex-1 p-4 print:p-0">
         <TreeCanvas 
           nodes={nodes}
           svgRef={svgRef}
           onSelectPerson={(id) => console.log("Selected:", id)}
-          onExport={async () => {}}
         />
       </main>
     </div>
