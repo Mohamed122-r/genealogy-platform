@@ -58,6 +58,7 @@ export default async function TreePage() {
           nodes={nodes}
           svgRef={svgRef}
           onSelectPerson={(id) => console.log("Selected:", id)}
+          onExport={async () => {}}
         />
       </main>
     </div>
