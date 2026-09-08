@@ -1,23 +1,20 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { db } from "@/lib/db";
 
-export const authOptions = {
-  session: {
-    strategy: "jwt" as const,
-  },
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  session: { strategy: "jwt" },
   pages: {
     signIn: "/login",
   },
   providers: [
-    CredentialsProvider({
-      name: "credentials",
+    Credentials({
       credentials: {
-        email: { label: "Email", type: "text" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      authorize: async (credentials) => {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -61,7 +58,4 @@ export const authOptions = {
       return session;
     },
   },
-};
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+});
