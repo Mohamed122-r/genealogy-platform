@@ -33,7 +33,7 @@
     "jspdf": "^2.5.2",
     "lucide-react": "^0.454.0",
     "next": "15.0.3",
-    "next-auth": "^5.0.0-beta.22",
+    "next-auth": "4.24.7",
     "next-themes": "^0.3.0",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
