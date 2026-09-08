@@ -1,37 +1,47 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { db } from "@/lib/db";
-import { z } from "zod";
-import { authConfig } from "@/lib/auth.config";
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  session: { strategy: "jwt" },
+export const authOptions = {
+  session: {
+    strategy: "jwt" as const,
+  },
+  pages: {
+    signIn: "/login",
+  },
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "credentials",
       credentials: {
-        email: { label: "البريد الإلكتروني", type: "email" },
-        password: { label: "كلمة المرور", type: "password" },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        const parsed = loginSchema.safeParse(credentials);
-        if (!parsed.success) return null;
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
 
-        const { email, password } = parsed.data;
-        const user = await db.user.findUnique({ where: { email } });
+        const user = await db.user.findUnique({
+          where: { email: credentials.email },
+        });
 
-        if (!user) return null;
+        if (!user) {
+          return null;
+        }
 
-        const isValid = await compare(password, user.password);
-        if (!isValid) return null;
+        const isValid = await compare(credentials.password, user.password);
 
-        return { id: user.id, email: user.email, name: user.name, role: user.role };
+        if (!isValid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
       },
     }),
   ],
@@ -44,11 +54,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
+      if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as any;
       }
       return session;
     },
   },
-});
+};
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
