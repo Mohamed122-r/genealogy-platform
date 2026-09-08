@@ -3,33 +3,25 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 40 50% 95%;
-    --foreground: 160 50% 10%;
-    --card: 40 40% 98%;
-    --card-foreground: 160 50% 10%;
-    --popover: 40 40% 98%;
-    --popover-foreground: 160 50% 10%;
-    --primary: 160 60% 20%;
-    --primary-foreground: 40 40% 98%;
-    --secondary: 45 50% 80%;
-    --secondary-foreground: 160 50% 10%;
-    --muted: 45 30% 90%;
-    --muted-foreground: 160 20% 30%;
-    --accent: 45 80% 60%;
-    --accent-foreground: 160 50% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 45 40% 75%;
-    --input: 45 40% 75%;
-    --ring: 160 60% 20%;
-    --radius: 0.75rem;
+  * {
+    @apply border-border;
   }
+  body {
+    @apply bg-heritage-bg text-deep-green;
+    direction: rtl;
+  }
+}
 
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground font-serif; direction: rtl; }
+@font-face {
+  font-family: 'Heritage';
+  src: url('/fonts/Amiri.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @layer utilities {
-  .font-heritage { font-family: 'Amiri', serif; }
+  .font-heritage {
+    font-family: 'Heritage', serif;
+  }
 }
