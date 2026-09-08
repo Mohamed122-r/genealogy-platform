@@ -19,15 +19,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return null;
         }
 
+        // إضافة تحويل نوع (Type Casting)
         const user = await db.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentials.email as string },
         });
 
         if (!user) {
           return null;
         }
 
-        const isValid = await compare(credentials.password, user.password);
+        const isValid = await compare(credentials.password as string, user.password);
 
         if (!isValid) {
           return null;
