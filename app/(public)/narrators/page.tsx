@@ -1,54 +1,32 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
 
-// بيان الرواة (يمكن ربطه بقاعدة البيانات لاحقاً)
 const narrators = [
-  {
-    name: "الشيخ / محمد بن عبدالله",
-    role: "راوٍ رئيسي",
-    bio: "من كبار الرواة، قام بتوثيق الجيل الأول والثاني من العائلة عبر مقابلات ميدانية."
-  },
-  {
-    name: "الأستاذ / أحمد بن خالد",
-    role: "مؤرخ",
-    bio: "باحث في الأنساب، ساهم في مراجعة المصادر التاريخية وتوثيق الفروع."
-  },
-  {
-    name: "الحاج / عمر بن سعيد",
-    role: "راوٍ مساعد",
-    bio: "قدم معلومات قيمة عن فروع العائلة التي استقرت خارج المنطقة الأصلية."
-  },
+  { name: "الشيخ / محمد بن عبدالله", role: "راوٍ رئيسي", bio: "قام بتوثيق الجيل الأول والثاني من العائلة." },
+  { name: "الأستاذ / أحمد بن خالد", role: "مؤرخ", bio: "ساهم في مراجعة المصادر التاريخية وتوثيق الفروع." },
+  { name: "الحاج / عمر بن سعيد", role: "راوٍ مساعد", bio: "قدم معلومات قيمة عن فروع العائلة." },
 ];
 
 export default function NarratorsPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl font-heritage font-bold text-deep-green text-center mb-8">
-          الرواة والمحدثون
-        </h1>
-        <div className="w-32 h-1 bg-gold-500 mx-auto mb-12 rounded-full"></div>
-        <p className="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-          نبذة عن الأشخاص الذين ساهموا في توثيق وتاريخ هذه الشجرة المباركة.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {narrators.map((narrator, index) => (
-            <Card key={index} className="bg-white border-gold-500/30 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 mx-auto bg-deep-green rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-8 h-8 text-gold-500" />
+    <section className="content-section">
+      <div className="content-container">
+        <div className="content-card">
+          <h1 className="text-4xl font-bold mb-6 text-center">الرواة والمحدثون</h1>
+          <div className="h-1 w-32 bg-[#C9A227] mx-auto mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {narrators.map((narrator, index) => (
+              <div key={index} className="bg-[#FDFBF3] p-6 rounded-xl text-center border border-[#C9A227]/20">
+                <div className="w-16 h-16 rounded-full bg-[#0A1711] flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-[#C9A227]" />
                 </div>
-                <CardTitle className="text-xl font-bold text-deep-green">{narrator.name}</CardTitle>
-                <p className="text-gold-600 font-semibold">{narrator.role}</p>
-              </CardHeader>
-              <CardContent className="text-center text-gray-600 leading-relaxed">
-                {narrator.bio}
-              </CardContent>
-            </Card>
-          ))}
+                <h3 className="text-xl font-bold">{narrator.name}</h3>
+                <p className="text-[#C9A227] font-bold my-2">{narrator.role}</p>
+                <p className="text-gray-600">{narrator.bio}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
