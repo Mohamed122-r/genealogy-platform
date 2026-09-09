@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { TreePine, Search, ZoomIn, ZoomOut, RotateCcw, Maximize2, Download, FileText, FileImage, FileType } from "lucide-react";
-import { TreeExporter } from "@/components/tree/TreeExporter";
 import { TreeCanvas } from "@/components/tree/TreeCanvas";
 import { PersonNode } from "@/types/tree";
 
@@ -22,7 +21,11 @@ export default function TreePage() {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    // يمكن استبدال هذا بجلب حقيقي من Prisma
+    // استبدل هذا بجلب حقيقي من قاعدة البيانات
+    const fetchData = async () => {
+      // يمكنك إضافة fetch هنا
+    };
+    fetchData();
   }, []);
 
   const handleSearch = (term: string) => {
@@ -45,7 +48,7 @@ export default function TreePage() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF3]">
-      {/* الهيدر المخصص للشجرة */}
+      {/* الهيدر المخصص للشجرة (بلون داكن) */}
       <div className="bg-[#0A1711] text-white py-4">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -60,7 +63,7 @@ export default function TreePage() {
         </div>
       </div>
 
-      {/* شريط الأدوات */}
+      {/* شريط الأدوات الاحترافي */}
       <div className="bg-[#0A1711] text-white py-2 border-t border-[#C9A227]/30">
         <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
           {/* البحث */}
@@ -113,15 +116,23 @@ export default function TreePage() {
         </div>
       </div>
 
-      {/* منطقة الشجرة */}
+      {/* منطقة الشجرة - أكبر وأكثر احترافية */}
       <div className="container mx-auto px-4 py-6">
         <div className="bg-white rounded-2xl border border-[#C9A227]/30 shadow-2xl overflow-hidden">
-          <TreeCanvas
-            nodes={nodes}
-            svgRef={svgRef}
-            onSelectPerson={(id) => console.log("Selected:", id)}
-            onExport={async () => {}}
-          />
+          <div className="relative">
+            {/* طبقة التكبير */}
+            <div style={{ transform: `scale(${zoomLevel})`, transformOrigin: "center" }}>
+              <TreeCanvas
+                nodes={nodes}
+                svgRef={svgRef}
+                onSelectPerson={(id) => console.log("Selected:", id)}
+                onExport={async () => {}}
+              />
+            </div>
+
+            {/* الإطار الذهبي */}
+            <div className="absolute inset-0 border-4 border-[#C9A227]/20 pointer-events-none rounded-2xl"></div>
+          </div>
         </div>
       </div>
     </div>
