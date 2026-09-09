@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 import { PersonNode } from "@/types/tree";
 import { calculateTreeLayout } from "@/lib/tree/tree-layout";
 import { Button } from "@/components/ui/button";
-import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Search } from "lucide-react";
+import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Search, Download } from "lucide-react";
 import { TreeLeaf } from "./TreeLeaf";
 import { TreeBranch } from "./TreeBranch";
 
@@ -107,27 +107,30 @@ export function TreeCanvas({ nodes, selectedPersonId, onSelectPerson, svgRef, on
 
   return (
     <div className="w-full h-[600px] md:h-[800px] flex flex-col bg-[#FDFBF3] overflow-hidden relative">
-      {/* إطار ذهبي */}
-      <div className="absolute inset-0 border-4 border-[#C9A227]/20 pointer-events-none z-10 rounded-lg m-2"></div>
+      {/* إطار ذهبي ناعم */}
+      <div className="absolute inset-0 border-2 border-[#C9A227]/20 pointer-events-none z-10 rounded-xl m-2"></div>
 
-      {/* شريط الأدوات - مدمج في الأعلى */}
-      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 bg-[#0A1711]/90 p-2 rounded-xl shadow-xl">
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={() => handleZoom('in')}>
+      {/* شريط الأدوات - أنيق */}
+      <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 bg-[#0A1711]/80 backdrop-blur-md p-2 rounded-2xl shadow-2xl">
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-xl" onClick={() => handleZoom('in')}>
           <ZoomIn className="w-5 h-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={() => handleZoom('out')}>
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-xl" onClick={() => handleZoom('out')}>
           <ZoomOut className="w-5 h-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={() => setViewBox({ x: treeBounds.minX - 50, y: treeBounds.minY - 50, width: treeBounds.maxX - treeBounds.minX + 100, height: treeBounds.maxY - treeBounds.minY + 100 })}>
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-xl" onClick={() => setViewBox({ x: treeBounds.minX - 50, y: treeBounds.minY - 50, width: treeBounds.maxX - treeBounds.minX + 100, height: treeBounds.maxY - treeBounds.minY + 100 })}>
           <RotateCcw className="w-5 h-5" />
         </Button>
-        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20" onClick={() => svgRef.current?.requestFullscreen()}>
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-xl" onClick={() => svgRef.current?.requestFullscreen()}>
           <Maximize2 className="w-5 h-5" />
+        </Button>
+        <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-xl" onClick={() => onExport('svg')}>
+          <Download className="w-5 h-5" />
         </Button>
       </div>
 
-      {/* البحث */}
-      <div className="absolute top-4 left-4 z-20 w-64 bg-white/90 backdrop-blur-sm rounded-xl shadow-xl p-2">
+      {/* البحث - أنيق */}
+      <div className="absolute top-4 left-4 z-20 w-64 bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-2">
         <div className="flex items-center gap-2">
           <Search className="w-4 h-4 text-[#C9A227]" />
           <input
@@ -140,7 +143,7 @@ export function TreeCanvas({ nodes, selectedPersonId, onSelectPerson, svgRef, on
         </div>
       </div>
 
-      {/* لوحة الرسم SVG */}
+      {/* لوحة الرسم SVG - ناعمة */}
       <div className="flex-1 overflow-hidden cursor-grab active:cursor-grabbing" onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
         <div style={{ transform: `scale(${zoomLevel})`, transformOrigin: "center" }}>
           <svg 
