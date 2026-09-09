@@ -7,8 +7,8 @@ import { PersonNode } from "@/types/tree";
 
 // البيانات التجريبية (قابلة للاستبدال ببيانات قاعدة البيانات)
 const sampleNodes: PersonNode[] = [
-  { id: "1", firstName: "عبدالله", lastName: "انس", fullName: "عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: null, branchId: null, birthDate: null, deathDate: null },
-  { id: "2", firstName: "محمد", lastName: "عبدالله القحطاني", fullName: "محمد عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
+  { id: "1", firstName: "عبدالله", lastName: "القحطاني", fullName: "عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: null, branchId: null, birthDate: null, deathDate: null },
+  { id: "2", firstName: "محمد", lastName: "انس القحطاني", fullName: "محمد عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
   { id: "3", firstName: "أحمد", lastName: "عبدالله القحطاني", fullName: "أحمد عبدالله القحطاني", gender: "MALE", status: "ALIVE", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
   { id: "4", firstName: "خالد", lastName: "محمد القحطاني", fullName: "خالد محمد القحطاني", gender: "MALE", status: "ALIVE", fatherId: "2", branchId: null, birthDate: null, deathDate: null },
   { id: "5", firstName: "عمر", lastName: "أحمد القحطاني", fullName: "عمر أحمد القحطاني", gender: "MALE", status: "DECEASED", fatherId: "3", branchId: null, birthDate: null, deathDate: null },
