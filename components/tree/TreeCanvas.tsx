@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { PersonNode, LayoutNode } from "@/types/tree";
+import { PersonNode } from "@/types/tree";
 import { calculateTreeLayout } from "@/lib/tree/tree-layout";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Search } from "lucide-react";
+import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Search, Download, FileText, FileImage } from "lucide-react";
 import { TreeLeaf } from "./TreeLeaf";
 import { TreeBranch } from "./TreeBranch";
-import { STATUS_COLORS } from "@/types/tree";
 
 interface TreeCanvasProps {
   nodes: PersonNode[];
