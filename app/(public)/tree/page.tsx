@@ -1,13 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { TreePine, Search, ZoomIn, ZoomOut, RotateCcw, Maximize2, Download, FileText, FileImage, FileType } from "lucide-react";
+import { useRef, useState } from "react";
+import { TreePine, Search, ZoomIn, ZoomOut, RotateCcw, Maximize2 } from "lucide-react";
 import { TreeCanvas } from "@/components/tree/TreeCanvas";
 import { PersonNode } from "@/types/tree";
 
-// بيانات تجريبية (قابلة للاستبدال بالبيانات الحقيقية من قاعدة البيانات)
+// البيانات التجريبية (قابلة للاستبدال ببيانات قاعدة البيانات)
 const sampleNodes: PersonNode[] = [
-  { id: "1", firstName: "عبدالله", lastName: "القحطاني", fullName: "عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: null, branchId: null, birthDate: null, deathDate: null },
+  { id: "1", firstName: "عبدالله", lastName: "انس", fullName: "عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: null, branchId: null, birthDate: null, deathDate: null },
   { id: "2", firstName: "محمد", lastName: "عبدالله القحطاني", fullName: "محمد عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
   { id: "3", firstName: "أحمد", lastName: "عبدالله القحطاني", fullName: "أحمد عبدالله القحطاني", gender: "MALE", status: "ALIVE", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
   { id: "4", firstName: "خالد", lastName: "محمد القحطاني", fullName: "خالد محمد القحطاني", gender: "MALE", status: "ALIVE", fatherId: "2", branchId: null, birthDate: null, deathDate: null },
@@ -15,18 +15,10 @@ const sampleNodes: PersonNode[] = [
 ];
 
 export default function TreePage() {
-  const [nodes, setNodes] = useState<PersonNode[]>(sampleNodes);
+  const [nodes] = useState<PersonNode[]>(sampleNodes);
   const [searchTerm, setSearchTerm] = useState("");
   const [zoomLevel, setZoomLevel] = useState(1);
   const svgRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    // استبدل هذا بجلب حقيقي من قاعدة البيانات
-    const fetchData = async () => {
-      // يمكنك إضافة fetch هنا
-    };
-    fetchData();
-  }, []);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -48,7 +40,7 @@ export default function TreePage() {
 
   return (
     <div className="min-h-screen bg-[#FDFBF3]">
-      {/* الهيدر المخصص للشجرة (بلون داكن) */}
+      {/* الهيدر الداكن */}
       <div className="bg-[#0A1711] text-white py-4">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -63,7 +55,7 @@ export default function TreePage() {
         </div>
       </div>
 
-      {/* شريط الأدوات الاحترافي */}
+      {/* شريط الأدوات */}
       <div className="bg-[#0A1711] text-white py-2 border-t border-[#C9A227]/30">
         <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
           {/* البحث */}
@@ -93,46 +85,18 @@ export default function TreePage() {
               <Maximize2 className="w-4 h-4 text-[#C9A227]" />
             </button>
           </div>
-
-          {/* أزرار التصدير */}
-          <div className="flex items-center gap-2">
-            <button className="bg-[#C9A227] text-[#0A1711] px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              تصدير
-            </button>
-            <button className="bg-white/10 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#C9A227]" />
-              PDF
-            </button>
-            <button className="bg-white/10 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-              <FileImage className="w-4 h-4 text-[#C9A227]" />
-              PNG
-            </button>
-            <button className="bg-white/10 px-4 py-2 rounded-lg text-sm flex items-center gap-2">
-              <FileType className="w-4 h-4 text-[#C9A227]" />
-              SVG
-            </button>
-          </div>
         </div>
       </div>
 
-      {/* منطقة الشجرة - أكبر وأكثر احترافية */}
+      {/* منطقة الشجرة */}
       <div className="container mx-auto px-4 py-6">
         <div className="bg-white rounded-2xl border border-[#C9A227]/30 shadow-2xl overflow-hidden">
-          <div className="relative">
-            {/* طبقة التكبير */}
-            <div style={{ transform: `scale(${zoomLevel})`, transformOrigin: "center" }}>
-              <TreeCanvas
-                nodes={nodes}
-                svgRef={svgRef}
-                onSelectPerson={(id) => console.log("Selected:", id)}
-                onExport={async () => {}}
-              />
-            </div>
-
-            {/* الإطار الذهبي */}
-            <div className="absolute inset-0 border-4 border-[#C9A227]/20 pointer-events-none rounded-2xl"></div>
-          </div>
+          <TreeCanvas
+            nodes={nodes}
+            svgRef={svgRef}
+            onSelectPerson={(id) => console.log("Selected:", id)}
+            onExport={async () => {}}
+          />
         </div>
       </div>
     </div>
