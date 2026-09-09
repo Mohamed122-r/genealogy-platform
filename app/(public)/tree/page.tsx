@@ -4,9 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import { TreePine, Search, ZoomIn, ZoomOut, RotateCcw, Maximize2, Download, FileText, FileImage, FileType } from "lucide-react";
 import { TreeExporter } from "@/components/tree/TreeExporter";
 import { TreeCanvas } from "@/components/tree/TreeCanvas";
+import { PersonNode } from "@/types/tree";
 
 // بيانات تجريبية (قابلة للاستبدال بالبيانات الحقيقية من قاعدة البيانات)
-const sampleNodes = [
+const sampleNodes: PersonNode[] = [
   { id: "1", firstName: "عبدالله", lastName: "القحطاني", fullName: "عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: null, branchId: null, birthDate: null, deathDate: null },
   { id: "2", firstName: "محمد", lastName: "عبدالله القحطاني", fullName: "محمد عبدالله القحطاني", gender: "MALE", status: "DECEASED", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
   { id: "3", firstName: "أحمد", lastName: "عبدالله القحطاني", fullName: "أحمد عبدالله القحطاني", gender: "MALE", status: "ALIVE", fatherId: "1", branchId: null, birthDate: null, deathDate: null },
@@ -15,12 +16,11 @@ const sampleNodes = [
 ];
 
 export default function TreePage() {
-  const [nodes, setNodes] = useState(sampleNodes);
+  const [nodes, setNodes] = useState<PersonNode[]>(sampleNodes);
   const [searchTerm, setSearchTerm] = useState("");
   const [zoomLevel, setZoomLevel] = useState(1);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  // محاكاة جلب البيانات من قاعدة البيانات
   useEffect(() => {
     // يمكن استبدال هذا بجلب حقيقي من Prisma
   }, []);
@@ -30,7 +30,6 @@ export default function TreePage() {
     if (term.trim()) {
       const found = sampleNodes.find(node => node.fullName.includes(term.trim()));
       if (found) {
-        // تمركز على الشخص المطلوب
         const element = document.getElementById(`person-${found.id}`);
         element?.scrollIntoView({ behavior: "smooth", block: "center" });
       }
