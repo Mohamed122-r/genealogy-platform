@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Shield, Users, BookOpen, ScrollText, TreePine, Landmark, Feather, ArrowLeft } from "lucide-react";
+import { TreePine, Users, BookOpen, ScrollText, Feather, Shield } from "lucide-react";
 import { db } from "@/lib/db";
 
 export default async function HomePage() {
@@ -10,152 +10,129 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-[#08100C] text-white font-sans">
+    <div className="min-h-screen">
       {/* ===== الهيدر الداكن ===== */}
-      <header className="bg-[#0A1711] border-b border-[#C9A227]/30 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-14 h-14 rounded-full overflow-hidden">
-              <img src="/images/small-tree.png" alt="الشعار" className="w-full h-full object-cover" />
+      <header className="header">
+        <div className="header-content">
+          <div className="header-logo">
+            <div className="logo-icon">
+              <TreePine />
             </div>
             <div>
-              <span className="text-2xl font-heritage font-bold">Mohamed Abdalwhab</span>
-              <span className="block text-xs text-[#C9A227]">شجرة النسب العائلية</span>
+              <span className="logo-text">شجرة النسب العائلية</span>
+              <span className="logo-subtext">Mohamed Abdalwhab</span>
             </div>
           </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <Link href="/" className="text-[#C9A227] font-bold">الرئيسية</Link>
-            <Link href="/introduction" className="hover:text-[#C9A227]">المقدمة</Link>
-            <Link href="/narrators" className="hover:text-[#C9A227]">الرواة</Link>
-            <Link href="/tree" className="hover:text-[#C9A227]">المشجرة</Link>
-            <Link href="/sources" className="hover:text-[#C9A227]">المصادر</Link>
-            <Link href="/contact" className="hover:text-[#C9A227]">تواصل معنا</Link>
+
+          <nav className="header-nav">
+            <Link href="/" className="active">الرئيسية</Link>
+            <Link href="/introduction">المقدمة</Link>
+            <Link href="/narrators">الرواة</Link>
+            <Link href="/tree">المشجرة</Link>
+            <Link href="/sources">المصادر</Link>
+            <Link href="/contact">تواصل معنا</Link>
           </nav>
-          <Link href="/login" className="bg-[#C9A227] text-[#0A1711] px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2">
+
+          <Link href="/login" className="header-cta">
             <Shield className="w-4 h-4" />
             لوحة التحكم
           </Link>
         </div>
       </header>
 
-      {/* ===== قسم الهيرو (مستنسخ من الصورة) ===== */}
-      <section className="relative overflow-hidden">
-        {/* الخلفية الكريمية */}
-        <div className="absolute inset-0 bg-[#FDFBF3]">
-          <img src="/images/bg.png" alt="الخلفية" className="w-full h-full object-cover opacity-20" />
-        </div>
-
-        <div className="container mx-auto px-4 py-20 relative z-10 flex flex-col md:flex-row items-center gap-12">
-          {/* الشجرة الكبيرة */}
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img 
-              src="/images/big-tree.png" 
-              alt="شجرة العائلة" 
-              className="w-full max-w-[500px] h-auto rounded-2xl shadow-2xl"
-            />
+      {/* ===== قسم البطل ===== */}
+      <section className="hero">
+        <div className="hero-container">
+          <div className="hero-badge">
+            <Feather />
+            <span>منصة رقمية موثوقة</span>
           </div>
-
-          {/* النص التراثي */}
-          <div className="w-full md:w-1/2 text-center md:text-right">
-            <div className="inline-flex items-center gap-2 bg-[#C9A227]/20 border border-[#C9A227]/50 px-4 py-2 rounded-full mb-6">
-              <Feather className="w-4 h-4 text-[#C9A227]" />
-              <span className="text-[#C9A227] font-semibold">منصة رقمية موثوقة</span>
-            </div>
-            <h1 className="text-6xl font-heritage font-bold text-[#0A1711] mb-4">شجرة النسب</h1>
-            <h2 className="text-4xl text-[#C9A227] font-heritage mb-8">العائلية الكريمة</h2>
-            <p className="text-[#0A1711]/80 text-lg mb-8 leading-relaxed">
-              وثّق تاريخ عائلتك، احفظ أنسابك، واربط الأجيال ببعضها البعض.
-            </p>
-            <Link href="/tree" className="bg-[#C9A227] text-[#0A1711] px-10 py-4 rounded-lg text-xl font-bold hover:bg-[#D4AF37] transition-all shadow-xl">
-              استكشف الشجرة الآن
-            </Link>
-          </div>
+          <h1>شجرة النسب</h1>
+          <h2>العائلية الكريمة</h2>
+          <p>
+            وثّق تاريخ عائلتك، احفظ أنسابك، واربط الأجيال ببعضها البعض.
+          </p>
+          <Link href="/tree" className="hero-cta">
+            استكشف الشجرة الآن
+          </Link>
         </div>
       </section>
 
-      {/* ===== قسم البطاقات (تراثي) ===== */}
-      <section className="py-16 bg-[#FDFBF3]">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {/* ===== قسم البطاقات ===== */}
+      <section className="cards-section">
+        <div className="cards-container">
+          <div className="cards-grid">
             {/* بطاقة المقدمة */}
-            <div className="bg-white text-[#0A1711] rounded-xl p-6 shadow-xl border border-[#C9A227]/20">
-              <div className="w-12 h-12 rounded-full bg-[#0A1711] flex items-center justify-center mb-4">
-                <BookOpen className="w-6 h-6 text-[#C9A227]" />
+            <div className="card">
+              <div className="card-icon">
+                <BookOpen />
               </div>
-              <h3 className="text-lg font-bold mb-2">المقدمة</h3>
-              <p className="text-sm text-gray-600">تعرف على تاريخ العائلة وأصولها</p>
-              <Link href="/introduction" className="text-[#0A1711] text-sm font-bold mt-4 block">
-                اقرأ المزيد ←
-              </Link>
+              <h3>المقدمة</h3>
+              <p>تعرف على تاريخ العائلة وأصولها</p>
+              <Link href="/introduction" className="card-link">اقرأ المزيد ←</Link>
             </div>
 
             {/* بطاقة التعريف بالعائلة */}
-            <div className="bg-white text-[#0A1711] rounded-xl p-6 shadow-xl border border-[#C9A227]/20">
-              <div className="w-12 h-12 rounded-full bg-[#0A1711] flex items-center justify-center mb-4">
-                <Users className="w-6 h-6 text-[#C9A227]" />
+            <div className="card">
+              <div className="card-icon">
+                <Users />
               </div>
-              <h3 className="text-lg font-bold mb-2">التعريف بالعائلة</h3>
-              <p className="text-sm text-gray-600">تعرّف على فروع العائلة وأعلامها</p>
-              <Link href="/narrators" className="text-[#0A1711] text-sm font-bold mt-4 block">
-                اقرأ المزيد ←
-              </Link>
+              <h3>التعريف بالعائلة</h3>
+              <p>تعرّف على فروع العائلة وأعلامها</p>
+              <Link href="/narrators" className="card-link">اقرأ المزيد ←</Link>
             </div>
 
             {/* بطاقة الرواة */}
-            <div className="bg-white text-[#0A1711] rounded-xl p-6 shadow-xl border border-[#C9A227]/20">
-              <div className="w-12 h-12 rounded-full bg-[#0A1711] flex items-center justify-center mb-4">
-                <ScrollText className="w-6 h-6 text-[#C9A227]" />
+            <div className="card">
+              <div className="card-icon">
+                <ScrollText />
               </div>
-              <h3 className="text-lg font-bold mb-2">الرواة</h3>
-              <p className="text-sm text-gray-600">تعرف على رواة تاريخ العائلة</p>
-              <Link href="/sources" className="text-[#0A1711] text-sm font-bold mt-4 block">
-                اقرأ المزيد ←
-              </Link>
+              <h3>الرواة</h3>
+              <p>تعرف على رواة تاريخ العائلة</p>
+              <Link href="/sources" className="card-link">اقرأ المزيد ←</Link>
             </div>
 
             {/* بطاقة المشجرة */}
-            <div className="bg-white text-[#0A1711] rounded-xl p-6 shadow-xl border border-[#C9A227]/20">
-              <div className="w-12 h-12 rounded-full bg-[#0A1711] flex items-center justify-center mb-4">
-                <TreePine className="w-6 h-6 text-[#C9A227]" />
+            <div className="card">
+              <div className="card-icon">
+                <TreePine />
               </div>
-              <h3 className="text-lg font-bold mb-2">المشجرة</h3>
-              <p className="text-sm text-gray-600">استكشف الشجرة التفاعلية</p>
-              <Link href="/tree" className="text-[#0A1711] text-sm font-bold mt-4 block">
-                استكشف الآن ←
-              </Link>
+              <h3>المشجرة</h3>
+              <p>استكشف الشجرة التفاعلية</p>
+              <Link href="/tree" className="card-link">استكشف الآن ←</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== قسم الإحصائيات الداكن ===== */}
-      <section className="py-16 bg-[#0A1711] border-y border-[#C9A227]/20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-3 gap-8 text-center">
+      {/* ===== قسم الإحصائيات ===== */}
+      <section className="stats-section">
+        <div className="stats-container">
+          <div className="stats-grid">
             <div>
-              <p className="text-5xl font-bold text-[#C9A227]">{totalPeople.toLocaleString('ar-EG')}</p>
-              <p className="text-gray-300 mt-2">إجمالي الأسماء</p>
+              <p className="stat-number">{totalPeople.toLocaleString('ar-EG')}</p>
+              <p className="stat-label">إجمالي الأسماء</p>
             </div>
-            <div className="border-x border-[#C9A227]/20">
-              <p className="text-5xl font-bold text-[#C9A227]">{totalBranches.toLocaleString('ar-EG')}</p>
-              <p className="text-gray-300 mt-2">عدد الفروع</p>
+            <div className="border-between">
+              <p className="stat-number">{totalBranches.toLocaleString('ar-EG')}</p>
+              <p className="stat-label">عدد الفروع</p>
             </div>
             <div>
-              <p className="text-5xl font-bold text-[#C9A227]">{aliveCount.toLocaleString('ar-EG')}</p>
-              <p className="text-gray-300 mt-2">الأحياء</p>
+              <p className="stat-number">{aliveCount.toLocaleString('ar-EG')}</p>
+              <p className="stat-label">الأحياء</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== الفوتر الذهبي ===== */}
-      <footer className="bg-[#08100C] py-12 border-t border-[#C9A227]/20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="w-16 h-16 rounded-full bg-[#C9A227] flex items-center justify-center mx-auto mb-6">
-            <TreePine className="w-8 h-8 text-[#08100C]" />
+      {/* ===== الفوتر ===== */}
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-logo">
+            <TreePine />
           </div>
-          <p className="text-[#C9A227] text-lg mb-2">Designed & Developed by</p>
-          <p className="text-white text-3xl font-heritage font-bold">Mohamed Abdalwhab</p>
+          <p className="footer-designer">Designed & Developed by</p>
+          <p className="footer-name">Mohamed Abdalwhab</p>
         </div>
       </footer>
     </div>
