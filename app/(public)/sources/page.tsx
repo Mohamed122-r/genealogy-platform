@@ -1,60 +1,34 @@
 import { ScrollText } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const sources = [
-  {
-    title: "كتاب تاريخ العائلة",
-    author: "محمد بن عبدالله",
-    type: "كتاب مطبوع",
-    year: "1985",
-  },
-  {
-    title: "مخطوطة النسب القديمة",
-    author: "غير معروف",
-    type: "مخطوطة أصلية",
-    year: "القرن الثامن عشر",
-  },
-  {
-    title: "سجلات الأحوال المدنية",
-    author: "دائرة الأحوال المدنية",
-    type: "سجل رسمي",
-    year: "1900 - 2020",
-  },
+  { title: "كتاب تاريخ العائلة", author: "محمد بن عبدالله", type: "كتاب مطبوع", year: "1985" },
+  { title: "مخطوطة النسب القديمة", author: "غير معروف", type: "مخطوطة أصلية", year: "القرن الثامن عشر" },
+  { title: "سجلات الأحوال المدنية", author: "دائرة الأحوال المدنية", type: "سجل رسمي", year: "1900 - 2020" },
 ];
 
 export default function SourcesPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl font-heritage font-bold text-deep-green text-center mb-8">
-          المصادر والمراجع
-        </h1>
-        <div className="w-32 h-1 bg-gold-500 mx-auto mb-12 rounded-full"></div>
-        
-        <div className="space-y-8">
-          {sources.map((source, index) => (
-            <Card key={index} className="bg-white border-gold-500/30 shadow-md">
-              <CardContent className="p-6 flex items-center gap-6">
-                <div className="w-16 h-16 bg-deep-green rounded-full flex items-center justify-center shrink-0">
-                  <ScrollText className="w-8 h-8 text-gold-500" />
+    <section className="content-section">
+      <div className="content-container">
+        <div className="content-card">
+          <h1 className="text-4xl font-bold mb-6 text-center">المصادر والمراجع</h1>
+          <div className="h-1 w-32 bg-[#C9A227] mx-auto mb-8"></div>
+          <div className="space-y-6">
+            {sources.map((source, index) => (
+              <div key={index} className="flex items-center gap-4 bg-[#FDFBF3] p-6 rounded-xl border border-[#C9A227]/20">
+                <div className="w-12 h-12 rounded-full bg-[#0A1711] flex items-center justify-center">
+                  <ScrollText className="w-6 h-6 text-[#C9A227]" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-deep-green mb-2">{source.title}</h3>
+                <div>
+                  <h3 className="text-lg font-bold">{source.title}</h3>
                   <p className="text-gray-600">المؤلف: {source.author}</p>
-                  <div className="flex gap-3 mt-3">
-                    <span className="bg-gold-500/20 text-gold-700 px-3 py-1 rounded-full text-sm font-semibold">
-                      {source.type}
-                    </span>
-                    <span className="bg-deep-green/10 text-deep-green px-3 py-1 rounded-full text-sm font-semibold">
-                      سنة النشر: {source.year}
-                    </span>
-                  </div>
+                  <span className="text-[#C9A227] font-semibold text-sm">{source.type} - {source.year}</span>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
