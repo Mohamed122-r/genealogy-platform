@@ -2,12 +2,18 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { db } from "@/lib/db";
+import { z } from "zod";
+import { authConfig } from "@/lib/auth.config";
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
-  pages: {
-    signIn: "/login",
-  },
   providers: [
     Credentials({
       credentials: {
@@ -15,24 +21,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
+        const parsed = loginSchema.safeParse(credentials);
+        if (!parsed.success) return null;
 
-        // إضافة تحويل نوع (Type Casting)
-        const user = await db.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+        const { email, password } = parsed.data;
 
-        if (!user) {
-          return null;
-        }
+        const user = await db.user.findUnique({ where: { email } });
+        if (!user) return null;
 
-        const isValid = await compare(credentials.password as string, user.password);
-
-        if (!isValid) {
-          return null;
-        }
+        const isValid = await compare(password, user.password);
+        if (!isValid) return null;
 
         return {
           id: user.id,
@@ -44,6 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
